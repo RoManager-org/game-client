@@ -40,7 +40,7 @@ jobs:
       - name: Install pnpm
         run: npm i -g pnpm
 
-      - name: Install dependancies
+      - name: Install dependencies
         run: pnpm i
 
       - name: Install roblox-ts
