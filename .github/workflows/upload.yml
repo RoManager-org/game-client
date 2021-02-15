@@ -19,6 +19,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload to Roblox
-        run: rojo upload --asset-id 6398753986 --cookie "$ROBLOSECURITY"
+        run: rojo upload --asset_id 6398753986 --cookie "$ROBLOSECURITY"
         env:
           ROBLOSECURITY: ${{ secrets.ROBLOSECURITY }}
