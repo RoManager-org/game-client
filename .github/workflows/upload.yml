@@ -2,9 +2,9 @@ name: roblox
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   workflow_dispatch:
 
@@ -14,9 +14,40 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: Roblox/setup-foreman@v1
+      - name: Install Rojo
+        uses: Roblox/setup-foreman@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@main
+        with:
+          node-version: 14
+          check-latest: true
+
+      - name: Cache ~/.pnpm-store
+        uses: actions/cache@main
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-${{ matrix.node-version }}-build-
+            ${{ runner.os }}-
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: Install dependancies
+        run: pnpm i
+
+      - name: Install roblox-ts
+        run: pnpm i -g roblox-ts
+
+      - name: Build
+        run: rbxtsc build
 
       - name: Upload to Roblox
         run: rojo upload --asset_id 6398753986 --cookie "$ROBLOSECURITY"
