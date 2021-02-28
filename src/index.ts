@@ -6,7 +6,7 @@ export = async (connectionInfo: { API_BASE_URL: string; INTEGRATION_KEY: string 
 		return;
 	}
 
-	const apiBaseUrl = connectionInfo.API_BASE_URL ?? 'https://game.romanager.jaydenn.dev/';
+	const apiBaseUrl = connectionInfo.API_BASE_URL ?? 'https://api.romanager.jaydenn.dev/game/';
 
 	print('[RoManager] Connecting to', apiBaseUrl);
 
